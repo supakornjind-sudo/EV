@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ปฏิทินงานประจำเดือน</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div id="mcLoading" class="mc-loading"><div class="mc-spinner"></div><span>กำลังโหลด...</span></div>
+
+<header class="mc-header">
+  <h1>📅 ปฏิทินงานประจำเดือน</h1>
+  <div class="mc-who">
+    <span>ชื่อฉัน:</span>
+    <input type="text" id="mcWho" placeholder="พิมพ์ชื่อ...">
+  </div>
+</header>
+
+<main class="mc-main">
+  <div class="mc-card mc-toolbar">
+    <button class="mc-btn mc-btn-gray" onclick="mcShiftMonth(-1)">◀</button>
+    <strong id="mcMonthLabel" class="mc-month-label">เดือน 2026</strong>
+    <button class="mc-btn mc-btn-gray" onclick="mcShiftMonth(1)">▶</button>
+    <button class="mc-btn mc-btn-blue" onclick="mcGoToday()">วันนี้</button>
+    <div class="mc-filter-chips" id="mcFilterChips"></div>
+    <button class="mc-btn mc-btn-gray" style="margin-left:auto;" onclick="mcOpenBrandModal()">🏷️ จัดการแบรนด์</button>
+    <button class="mc-btn mc-btn-green" onclick="mcOpenTaskModal()">➕ เพิ่มงาน</button>
+  </div>
+
+  <div class="mc-card">
+    <div class="mc-grid mc-grid-head">
+      <div>จ.</div><div>อ.</div><div>พ.</div><div>พฤ.</div><div>ศ.</div><div>ส.</div><div>อา.</div>
+    </div>
+    <div class="mc-grid" id="mcGrid"></div>
+  </div>
+
+  <div class="mc-card">
+    <strong style="color:#1e3a5f;">📋 งานเดือนนี้ทั้งหมด</strong>
+    <div id="mcMonthList"></div>
+  </div>
+</main>
+
+<!-- ===== TASK MODAL ===== -->
+<div class="mc-modal-bg" id="mcTaskModal">
+  <div class="mc-modal">
+    <h3 id="mcTaskModalTitle">➕ เพิ่มงาน</h3>
+    <div class="mc-form">
+      <label>ชื่องาน</label>
+      <input type="text" id="mcTitle" placeholder="เช่น โพสต์โปรโมชั่นเดือนกันยายน">
+      <label>แบรนด์</label>
+      <select id="mcBrand"></select>
+      <label>วันที่</label>
+      <input type="date" id="mcDate">
+      <label>โน้ต (ถ้ามี)</label>
+      <input type="text" id="mcNote" placeholder="รายละเอียดเพิ่มเติม...">
+    </div>
+    <div class="mc-modal-actions">
+      <button class="mc-btn mc-btn-red" id="mcDelBtn" onclick="mcDeleteTask()">🗑️ ลบ</button>
+      <button class="mc-btn mc-btn-gray" onclick="mcCloseModal('mcTaskModal')">ยกเลิก</button>
+      <button class="mc-btn mc-btn-green" onclick="mcSaveTask()">💾 บันทึก</button>
+    </div>
+  </div>
+</div>
+
+<!-- ===== BRAND MODAL ===== -->
+<div class="mc-modal-bg" id="mcBrandModal">
+  <div class="mc-modal">
+    <h3>🏷️ จัดการแบรนด์</h3>
+    <div id="mcBrandList" class="mc-brand-list"></div>
+    <div class="mc-form" style="margin-top:10px;">
+      <label>เพิ่มแบรนด์ใหม่</label>
+      <div style="display:flex;gap:8px;">
+        <input type="text" id="mcNewBrand" placeholder="ชื่อแบรนด์...">
+        <button class="mc-btn mc-btn-green" onclick="mcAddBrand()">➕ เพิ่ม</button>
+      </div>
+    </div>
+    <div class="mc-modal-actions">
+      <button class="mc-btn mc-btn-gray" onclick="mcCloseModal('mcBrandModal')">ปิด</button>
+    </div>
+  </div>
+</div>
+
+<script src="config.js"></script>
+<script src="api.js"></script>
+<script src="script.js"></script>
+</body>
+</html>
