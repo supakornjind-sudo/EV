@@ -18,6 +18,7 @@ const McAPI = {
   createTask(row)       { return this.call('createTask', { row }); },
   updateTask(id, row)   { return this.call('updateTask', { id, row }); },
   deleteTask(id)        { return this.call('deleteTask', { id }); },
-  createBrand(name)     { return this.call('createBrand', { name }); },
+  createBrand(name, color) { return this.call('createBrand', { name, color }); },
+  updateBrand(id, row)  { return this.call('updateBrand', { id, row }); },
   deleteBrand(id)       { return this.call('deleteBrand', { id }); },
 };
