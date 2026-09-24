@@ -3,6 +3,6 @@
  * หลัง Deploy Apps Script แล้ว ให้วาง URL ที่ได้มาแทนค่าด้านล่างนี้
  */
 const CONFIG = {
-  API_URL: 'https://script.google.com/macros/s/AKfycbwhjtv-XYbWlaYggrBF9Cr_UTPRpTgsE497piCHnEy2cH4JvoUkW3MrPKIvVOl0Apa_/exec',
+  API_URL: 'https://script.google.com/macros/s/AKfycbzlU2nmhaWv5frE5OpGV2PJewl-v7QAiqj5JrsYa52MpouieONZdowYj6twzUMKfRk/exec',
   APP_TITLE: 'ปฏิทินงานประจำเดือน',
 };
