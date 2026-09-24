@@ -26,6 +26,8 @@ function mcTodayISO() {
 function mcEsc(s) {
   return String(s == null ? '' : s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
 }
+/* กันปัญหา Google Sheets ส่งวันที่กลับมาพร้อมเวลาแปะท้าย เช่น 2026-09-24T00:00:00.000Z */
+function mcDateOnly(v) { return String(v || '').slice(0, 10); }
 const MC_MONTHS = ['มกราคม','กุมภาพันธ์','มีนาคม','เมษายน','พฤษภาคม','มิถุนายน','กรกฎาคม','สิงหาคม','กันยายน','ตุลาคม','พฤศจิกายน','ธันวาคม'];
 function mcMonthLabel(ym) {
   const p = ym.split('-').map(Number);
@@ -98,7 +100,7 @@ function mcGoToday() {
   mcRenderCalendar();
 }
 function mcTasksOn(iso) {
-  return MC.tasks.filter(t => t.date === iso && (!MC.filter || t.brand === MC.filter));
+  return MC.tasks.filter(t => mcDateOnly(t.date) === iso && (!MC.filter || t.brand === MC.filter));
 }
 function mcRenderCalendar() {
   document.getElementById('mcMonthLabel').textContent = mcMonthLabel(MC.ym);
@@ -120,11 +122,11 @@ function mcRenderCalendar() {
   }
   document.getElementById('mcGrid').innerHTML = cells;
 
-  const monthTasks = MC.tasks.filter(t => t.date && t.date.slice(0, 7) === MC.ym && (!MC.filter || t.brand === MC.filter))
-    .sort((a, b) => a.date.localeCompare(b.date));
+  const monthTasks = MC.tasks.filter(t => t.date && mcDateOnly(t.date).slice(0, 7) === MC.ym && (!MC.filter || t.brand === MC.filter))
+    .sort((a, b) => mcDateOnly(a.date).localeCompare(mcDateOnly(b.date)));
   document.getElementById('mcMonthList').innerHTML = monthTasks.length ? monthTasks.map(t => `
     <div class="mc-list-row" onclick="mcOpenTaskModal('${t.id}')">
-      <span class="mc-list-date">${t.date.slice(8, 10)}/${t.date.slice(5, 7)}</span>
+      <span class="mc-list-date">${mcDateOnly(t.date).slice(8, 10)}/${mcDateOnly(t.date).slice(5, 7)}</span>
       <span class="mc-list-dot" style="background:${mcBrandColor(t.brand)}"></span>
       <strong>${mcEsc(t.title)}</strong>
       ${t.note ? `<span style="color:#8fa1b5;font-size:12px;">📝 ${mcEsc(t.note)}</span>` : ''}
@@ -138,7 +140,7 @@ function mcOpenTaskModal(id, dateISO) {
   const t = id ? MC.tasks.find(x => x.id === id) : null;
   document.getElementById('mcTaskModalTitle').textContent = id ? '✏️ แก้ไขงาน' : '➕ เพิ่มงาน';
   document.getElementById('mcTitle').value = t ? t.title : '';
-  document.getElementById('mcDate').value = t ? t.date : (dateISO || mcTodayISO());
+  document.getElementById('mcDate').value = t ? mcDateOnly(t.date) : (dateISO || mcTodayISO());
   document.getElementById('mcNote').value = t ? (t.note || '') : '';
   const sel = document.getElementById('mcBrand');
   sel.innerHTML = MC.brands.map(b => `<option value="${b.id}">${mcEsc(b.name)}</option>`).join('');
