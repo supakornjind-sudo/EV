@@ -77,3 +77,7 @@ body { margin:0; font-family:"Segoe UI","TH Sarabun New",sans-serif; background:
 .mc-day-title:hover { color:#2c5d9e; }
 .mc-color-input { width:38px; height:38px; padding:2px; border:1px solid #d7e0ea; border-radius:8px; cursor:pointer; flex-shrink:0; background:#fff; }
 .mc-brand-item .mc-color-input { width:32px; height:32px; }
+
+/* แก้ช่องเลือกสีในฟอร์มเพิ่มแบรนด์ถูก .mc-form input{width:100%} ทับจนขยายเต็มแถว ดันปุ่มเพิ่มหลุดจอ */
+#mcNewBrand { flex: 1 1 auto; width: auto; min-width: 0; }
+#mcNewBrandColor { width: 38px !important; height: 38px !important; flex: none; padding: 2px; }
